@@ -1,18 +1,24 @@
-
 public class Main {
+    public static void main(String[] args) {
+        Cliente maria = new Cliente("Maria Silva", "123.456.789-00", "maria@email.com");
+        Conta cc = new ContaCorrente(maria);
+        Conta poupanca = new ContaPoupanca(maria);
 
-	public static void main(String[] args) {
-		Cliente venilton = new Cliente();
-		venilton.setNome("Venilton");
-		
-		Conta cc = new ContaCorrente(venilton);
-		Conta poupanca = new ContaPoupanca(venilton);
+        cc.depositar(1000);
+        cc.transferir(300, poupanca);
 
-		cc.depositar(100);
-		cc.transferir(100, poupanca);
-		
-		cc.imprimirExtrato();
-		poupanca.imprimirExtrato();
-	}
+        Banco banco = new Banco("Banco DIO");
+        banco.adicionarConta(cc);
+        banco.adicionarConta(poupanca);
 
+        banco.listarContas();
+
+        // Exemplo de bloqueio e operação inválida
+        cc.bloquear();
+        try {
+            cc.sacar(100);
+        } catch (Exception e) {
+            System.out.println("Erro ao sacar: " + e.getMessage());
+        }
+    }
 }
